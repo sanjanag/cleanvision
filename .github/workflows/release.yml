@@ -57,7 +57,7 @@ jobs:
           pip install --upgrade bump2version
       - name: Set current version
         run: |
-          echo "CURRENT_VERSION=$(python .github/scripts/get_version.py)" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=$(python .github/scripts/get_version.py)" >> "$GITHUB_ENV"
       - name: get version
         run: |
 #          echo "${{ env.CURRENT_VERSION }}"
