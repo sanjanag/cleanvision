@@ -33,12 +33,15 @@ jobs:
 #          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
 #          repository-url: https://test.pypi.org/legacy/
   bump-version:
-    needs: [publish]
+#    needs: [publish]
+    runs-on: "ubuntu-latest"
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
         with:
-          ref: ${{ github.head_ref }}
+          python-version: 3.11
       - name: Set current version
         run: CURRENT_VERSION=$(python .github/scripts/get_version.py)
       - name: Bump version
