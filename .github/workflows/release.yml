@@ -44,21 +44,23 @@ jobs:
         id: step_two
         run: |
           echo "${{ env.action_state }}" # This will output 'yellow'
-#      - name: Checkout source
-#        uses: actions/checkout@v3
-#      - name: Set up Python 3.11
-#        uses: actions/setup-python@v4
-#        with:
-#          python-version: 3.11
-#      - name: Install dependencies
-#        run: |
-#          pip install -U pip
-#          pip install -e .
-#          pip install --upgrade bump2version
-#      - name: Set current version
-#        run: |
-#          echo "CURRENT_VERSION=$(python .github/scripts/get_version.py)" >> $GITHUB_ENV
-#          echo "$CURRENT_VERSION"
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: |
+          pip install -U pip
+          pip install -e .
+          pip install --upgrade bump2version
+      - name: Set current version
+        run: |
+          echo "CURRENT_VERSION=$(python .github/scripts/get_version.py)" >> $GITHUB_ENV
+      - name: get version
+        run: |
+          echo "${{ env.CURRENT_VERSION }}"
 #          bump2version --current-version $CURRENT_VERSION patch pyproject.toml
 #      - name: Bump version
 #        shell: bash
