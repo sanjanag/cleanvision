@@ -61,7 +61,7 @@ jobs:
       - name: get version
         run: |
 #          echo "${{ env.CURRENT_VERSION }}"
-          bump2version --current-version $CURRENT_VERSION patch pyproject.toml
+          bump2version --current-version "${{ env.CURRENT_VERSION }}" patch pyproject.toml
           cat pyproject.toml
 #      - name: Bump version
 #        shell: bash
