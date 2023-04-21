@@ -1,7 +1,9 @@
 name: Build distribution
 
 on:
-  push: [autobump]
+  push:
+    branches:
+      - 'autobump'
 #  workflow_run:
 #    workflows: [ "CI" ]
 #    branches: [ main ]
