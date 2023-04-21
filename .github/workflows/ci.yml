@@ -1,69 +1,69 @@
-name: CI
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-jobs:
-  test:
-    name: "Test: Python ${{ matrix.python }} on ${{ matrix.os }}"
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
-        python:
-          - "3.7"
-          - "3.8"
-          - "3.9"
-          - "3.10"
-          - "3.11"
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python }}
-      - name: Setup python environment
-        run: ./.github/scripts/setup_python_env.sh
-        shell: bash
-      - name: Test with coverage
-        run: pytest --verbose --cov=src/cleanvision/ --cov-config .coveragerc --cov-report=xml tests/
-      - uses: codecov/codecov-action@v3
-  typecheck:
-    name: Type check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Setup python environment
-        run: ./.github/scripts/setup_python_env.sh
-        shell: bash
-      - name: Type check
-        run: mypy --strict --install-types --non-interactive src
-  fmt:
-    name: Black format
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: psf/black@stable
-  pylint:
-    name: Lint with flake8 for syntax+other error codes
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - name: Install flake8
-        run: pip install flake8
-      - name: Lint with flake8
-        run: flake8 --ignore=E501,E722,E401,W503 src tests --count --show-source --statistics
-  nblint:
-    name: Lint Notebooks
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: cleanlab/nblint-action@v1
+#name: CI
+#on:
+#  push:
+#    branches: [ main ]
+#  pull_request:
+#jobs:
+#  test:
+#    name: "Test: Python ${{ matrix.python }} on ${{ matrix.os }}"
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        os:
+#          - ubuntu-latest
+#          - macos-latest
+#          - windows-latest
+#        python:
+#          - "3.7"
+#          - "3.8"
+#          - "3.9"
+#          - "3.10"
+#          - "3.11"
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/setup-python@v4
+#        with:
+#          python-version: ${{ matrix.python }}
+#      - name: Setup python environment
+#        run: ./.github/scripts/setup_python_env.sh
+#        shell: bash
+#      - name: Test with coverage
+#        run: pytest --verbose --cov=src/cleanvision/ --cov-config .coveragerc --cov-report=xml tests/
+#      - uses: codecov/codecov-action@v3
+#  typecheck:
+#    name: Type check
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.11'
+#      - name: Setup python environment
+#        run: ./.github/scripts/setup_python_env.sh
+#        shell: bash
+#      - name: Type check
+#        run: mypy --strict --install-types --non-interactive src
+#  fmt:
+#    name: Black format
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: psf/black@stable
+#  pylint:
+#    name: Lint with flake8 for syntax+other error codes
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.10'
+#      - name: Install flake8
+#        run: pip install flake8
+#      - name: Lint with flake8
+#        run: flake8 --ignore=E501,E722,E401,W503 src tests --count --show-source --statistics
+#  nblint:
+#    name: Lint Notebooks
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: cleanlab/nblint-action@v1

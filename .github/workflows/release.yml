@@ -1,31 +1,51 @@
 name: Build distribution
 
 on:
-  workflow_run:
-    workflows: [ "CI" ]
-    branches: [ main ]
-    types:
-      - completed
-  release:
-    types: [ published ]
+  push: [autobump]
+#  workflow_run:
+#    workflows: [ "CI" ]
+#    branches: [ main ]
+#    types:
+#      - completed
+#  release:
+#    types: [ published ]
 
 jobs:
-  publish:
-    runs-on: "ubuntu-latest"
+#  publish:
+#    runs-on: "ubuntu-latest"
+#    steps:
+#      - name: Checkout source
+#        uses: actions/checkout@v3
+#      - name: Set up Python 3.11
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: 3.11
+#      - name: Install build dependencies
+#        run: pip install build
+#      - name: Build distributions
+#        run: python -m build
+#      - name: Publish package to PyPI
+#        if: github.repository == 'cleanlab/cleanvision' && github.event.workflow_run.conclusion == 'success'
+#        uses: pypa/gh-action-pypi-publish@release/v1
+#        with:
+#          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+#          repository-url: https://test.pypi.org/legacy/
+  bump-version:
+    needs: [publish]
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v4
         with:
-          python-version: 3.11
-      - name: Install build dependencies
-        run: pip install build
-      - name: Build distributions
-        run: python -m build
-      - name: Publish package to PyPI
-        if: github.repository == 'cleanlab/cleanvision' && github.event.workflow_run.conclusion == 'success'
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          repository-url: https://test.pypi.org/legacy/
+          ref: ${{ github.head_ref }}
+      - name: Set current version
+        run: CURRENT_VERSION=$(python .github/scripts/get_version.py)
+      - name: Bump version
+        run: |
+          pip install --upgrade bump2version
+          bump2version --current-version $CURRENT_VERSION patch pyproject.toml
+#      - name: Commit and push
+#        uses: stefanzweifel/git-auto-commit-action@v4
+#        with:
+#          commit_message: Bump patch version
+
+
