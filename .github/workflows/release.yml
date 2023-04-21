@@ -60,8 +60,9 @@ jobs:
           echo "CURRENT_VERSION=$(python .github/scripts/get_version.py)" >> $GITHUB_ENV
       - name: get version
         run: |
-          echo "${{ env.CURRENT_VERSION }}"
-#          bump2version --current-version $CURRENT_VERSION patch pyproject.toml
+#          echo "${{ env.CURRENT_VERSION }}"
+          bump2version --current-version $CURRENT_VERSION patch pyproject.toml
+          cat pyproject.toml
 #      - name: Bump version
 #        shell: bash
 #        run: |
