@@ -57,17 +57,12 @@ jobs:
           pip install --upgrade bump2version
       - name: Set current version
         run: echo "CURRENT_VERSION=$(python .github/scripts/get_version.py)" >> "$GITHUB_ENV"
-      - name: get version
+      - name: Bump version
         run: bump2version --current-version "${{ env.CURRENT_VERSION }}" patch pyproject.toml
-
-#      - name: Bump version
-#        shell: bash
-#        run: |
-#          echo $CURRENT_VERSION
-#
-#      - name: Commit and push
-#        uses: stefanzweifel/git-auto-commit-action@v4
-#        with:
-#          commit_message: Bump patch version
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          file_pattern: pyproject.toml
+          commit_message: Bump patch version
 
 
