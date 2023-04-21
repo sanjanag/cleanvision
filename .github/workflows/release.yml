@@ -36,22 +36,30 @@ jobs:
 #    needs: [publish]
     runs-on: "ubuntu-latest"
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
-      - name: Install dependencies
+      - name: Set the value
+        id: step_one
         run: |
-          pip install -U pip
-          pip install -e .
-          pip install --upgrade bump2version
-      - name: Set current version
+          echo "action_state=yellow" >> "$GITHUB_ENV"
+      - name: Use the value
+        id: step_two
         run: |
-          echo "CURRENT_VERSION=$(python .github/scripts/get_version.py)" >> $GITHUB_ENV
-          echo "$CURRENT_VERSION"
-          bump2version --current-version $CURRENT_VERSION patch pyproject.toml
+          echo "${{ env.action_state }}" # This will output 'yellow'
+#      - name: Checkout source
+#        uses: actions/checkout@v3
+#      - name: Set up Python 3.11
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: 3.11
+#      - name: Install dependencies
+#        run: |
+#          pip install -U pip
+#          pip install -e .
+#          pip install --upgrade bump2version
+#      - name: Set current version
+#        run: |
+#          echo "CURRENT_VERSION=$(python .github/scripts/get_version.py)" >> $GITHUB_ENV
+#          echo "$CURRENT_VERSION"
+#          bump2version --current-version $CURRENT_VERSION patch pyproject.toml
 #      - name: Bump version
 #        shell: bash
 #        run: |
