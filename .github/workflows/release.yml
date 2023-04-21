@@ -56,13 +56,10 @@ jobs:
           pip install -e .
           pip install --upgrade bump2version
       - name: Set current version
-        run: |
-          echo "CURRENT_VERSION=$(python .github/scripts/get_version.py)" >> "$GITHUB_ENV"
+        run: echo "CURRENT_VERSION=$(python .github/scripts/get_version.py)" >> "$GITHUB_ENV"
       - name: get version
-        run: |
-#          echo "${{ env.CURRENT_VERSION }}"
-          bump2version --current-version "${{ env.CURRENT_VERSION }}" patch pyproject.toml
-          cat pyproject.toml
+        run: bump2version --current-version "${{ env.CURRENT_VERSION }}" patch pyproject.toml
+
 #      - name: Bump version
 #        shell: bash
 #        run: |
