@@ -234,7 +234,8 @@ def calc_blurriness(image: Image, max_resolution: int) -> float:
         low_rs = image.resize((int(image.width // ratio), int(image.height // ratio)))
     else:
         low_rs = image
-    edges = get_edges(low_rs)
+    blurred = low_rs.filter(ImageFilter.GaussianBlur(radius=0.5))
+    edges = get_edges(blurred)
     blurriness = ImageStat.Stat(edges).var[0]
     assert isinstance(
         blurriness, float
