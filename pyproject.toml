@@ -10,7 +10,7 @@ authors = [
 ]
 description = "Find issues in image datasets"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 keywords = ["computer_vision", "cv", "image_data", "issue_detection", "data_quality", "image_quality", "machine_learning", "data_cleaning", "image_deduplication"]
 license = { file = "LICENSE" }
 classifiers = [
